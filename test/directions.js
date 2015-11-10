@@ -6,28 +6,28 @@ test("Directions", function(t) {
         u.plan(6);
 
         u.test("normalizes latLng", function(v) {
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             directions.setOrigin(L.latLng(1, 2));
             v.deepEqual(directions.getOrigin().geometry.coordinates, [2, 1]);
             v.end();
         });
 
         u.test("wraps latLng", function (v) {
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             directions.setOrigin(L.latLng(0, 190));
             v.deepEqual(directions.getOrigin().geometry.coordinates, [-170, 0]);
             v.end();
         });
 
         u.test("normalizes query string", function (v) {
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             directions.setOrigin('San Francisco');
             v.equal(directions.getOrigin().properties.query, 'San Francisco');
             v.end();
         });
 
         u.test("fires event", function (v) {
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             directions.on('origin', function (e) {
                 v.deepEqual(e.origin.geometry.coordinates, [2, 1]);
                 v.end();
@@ -36,14 +36,14 @@ test("Directions", function(t) {
         });
 
         u.test("fires unload on falsy inputs", function (v) {
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             directions.on('unload', function() { v.end(); });
             directions.setOrigin(L.latLng(1, 2));
             directions.setOrigin(undefined);
         });
 
         u.test("returns this", function (v) {
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             v.deepEqual(directions.setOrigin(L.latLng(1, 2)), directions);
             v.end();
         });
@@ -53,28 +53,28 @@ test("Directions", function(t) {
         u.plan(6);
 
         u.test("normalizes latLng", function (v) {
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             directions.setDestination(L.latLng(1, 2));
             v.deepEqual(directions.getDestination().geometry.coordinates, [2, 1]);
             v.end();
         });
 
         u.test("wraps latLng", function (v) {
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             directions.setDestination(L.latLng(0, 190));
             v.deepEqual(directions.getDestination().geometry.coordinates, [-170, 0]);
             v.end();
         });
 
         u.test("normalizes query string", function (v) {
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             directions.setDestination('San Francisco');
             v.equal(directions.getDestination().properties.query, 'San Francisco');
             v.end();
         });
 
         u.test("fires event", function (v) {
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             directions.on('destination', function (e) {
                 v.deepEqual(e.destination.geometry.coordinates, [2, 1]);
                 v.end();
@@ -83,14 +83,14 @@ test("Directions", function(t) {
         });
 
         u.test("fires unload on falsy inputs", function (v) {
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             directions.on('unload', function() { v.end(); });
             directions.setDestination(L.latLng(1, 2));
             directions.setDestination(undefined);
         });
 
         u.test("returns this", function (v) {
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             v.skip(directions.setDestination(L.latLng(1, 2)), directions);
             v.end();
         });
@@ -100,7 +100,7 @@ test("Directions", function(t) {
         u.plan(2);
 
         u.test("fires event", function (v) {
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             directions.on('profile', function (e) {
                 v.equal(e.profile, 'mapbox.walking');
                 v.end();
@@ -109,7 +109,7 @@ test("Directions", function(t) {
         });
 
         u.test("returns this", function (v) {
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             v.deepEqual(directions.setProfile('mapbox.walking'), directions);
             v.end();
         });
@@ -135,7 +135,7 @@ test("Directions", function(t) {
         };
 
         u.test("swaps origin and destination", function (v) {
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             directions.setOrigin(a);
             directions.setDestination(b);
             directions.reverse();
@@ -145,7 +145,7 @@ test("Directions", function(t) {
         });
 
         u.test("fires events", function (v) {
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             directions.setOrigin(a);
             directions.setDestination(b);
 
@@ -162,7 +162,7 @@ test("Directions", function(t) {
         });
 
         u.test("returns this", function (v) {
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             v.deepEqual(directions.reverse(), directions);
             v.end();
         });
@@ -172,21 +172,21 @@ test("Directions", function(t) {
         u.plan(3);
 
         u.test("constructs a URL with origin and destination", function (v) {
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             directions.setOrigin(L.latLng(1, 2)).setDestination(L.latLng(3, 4));
             v.equal(directions.queryURL(), 'https://api.tiles.mapbox.com/v4/directions/mapbox.driving/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key');
             v.end();
         });
 
         u.test("wraps coordinates", function (v) {
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             directions.setOrigin(L.latLng(0, 190)).setDestination(L.latLng(0, -195));
             v.equal(directions.queryURL(), 'https://api.tiles.mapbox.com/v4/directions/mapbox.driving/-170,0;165,0.json?instructions=html&geometry=polyline&access_token=key');
             v.end();
         });
 
         u.test("sets profile", function (v) {
-            var directions = L.mapbox.directions({accessToken: 'key', profile: 'mapbox.walking'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key', profile: 'mapbox.walking'});
             directions.setOrigin(L.latLng(1, 2)).setDestination(L.latLng(3, 4));
             v.equal(directions.queryURL(), 'https://api.tiles.mapbox.com/v4/directions/mapbox.walking/2,1;4,3.json?instructions=html&geometry=polyline&access_token=key');
             v.end();
@@ -198,7 +198,7 @@ test("Directions", function(t) {
 
         u.test("returns self", function (v) {
             var server = sinon.fakeServer.create();
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             v.deepEqual(directions.query(), directions);
             v.end();
             server.restore();
@@ -206,7 +206,7 @@ test("Directions", function(t) {
 
         u.test("fires error if response is an HTTP error", function (v) {
             var server = sinon.fakeServer.create();
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
 
             directions.on('error', function (e) {
                 v.ok(e.error);
@@ -226,7 +226,7 @@ test("Directions", function(t) {
 
         u.test("fires error if response is an API error", function (v) {
             var server = sinon.fakeServer.create();
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
 
             directions.on('error', function (e) {
                 v.equal(e.error, 'error');
@@ -246,7 +246,7 @@ test("Directions", function(t) {
 
         u.test("fires load if response is successful", function (v) {
             var server = sinon.fakeServer.create();
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
 
             directions.on('load', function (e) {
                 v.deepEqual(e.routes, []);
@@ -266,7 +266,7 @@ test("Directions", function(t) {
 
         u.test("aborts currently pending request", function (v) {
             var server = sinon.fakeServer.create();
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
 
             directions
                 .setOrigin(L.latLng(1, 2))
@@ -281,7 +281,7 @@ test("Directions", function(t) {
 
         u.test("decodes polyline geometries", function (v) {
             var server = sinon.fakeServer.create();
-            var directions = L.mapbox.directions({accessToken: 'key'});
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
 
             directions.on('load', function (e) {
                 v.deepEqual(e.routes[0].geometry, {
@@ -304,7 +304,7 @@ test("Directions", function(t) {
 
         u.test("replaces origin and destination with the response values if not set by geocoding", function (v) {
             var server = sinon.fakeServer.create();
-            var directions = L.mapbox.directions({accessToken: 'key'}),
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'}),
                 response = {
                     origin: {properties: {name: 'origin'}},
                     destination: {properties: {name: 'destination'}},
@@ -330,7 +330,7 @@ test("Directions", function(t) {
 
         u.test("does not replaces origin and destination with the response values if set by geocoding", function (v) {
             var server = sinon.fakeServer.create();
-            var directions = L.mapbox.directions({accessToken: 'key'}),
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'}),
                 origin = directions._normalizeWaypoint('somewhere'),
                 response = {
                     origin: {properties: {name: 'origin'}},
@@ -375,7 +375,7 @@ test("Directions", function(t) {
 
         u.test("returns geocoded response", function (v) {
             var server = sinon.fakeServer.create();
-            var directions = L.mapbox.directions({accessToken: 'key'}),
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'}),
                 response = {
                     features:[{
                         center:[3,3],
@@ -400,7 +400,7 @@ test("Directions", function(t) {
 
         u.test("handles no results found", function(v) {
             var server = sinon.fakeServer.create();
-            var directions = L.mapbox.directions({accessToken: 'key'}),
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'}),
                 response = {
                     features:[]
                     };
@@ -422,7 +422,7 @@ test("Directions", function(t) {
 
         u.test("bad geocoding cancels directions query", function(v) {
             var server = sinon.fakeServer.create();
-            var directions = L.mapbox.directions({accessToken: 'key'}),
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'}),
                 response = {
                     features:[]
                     };

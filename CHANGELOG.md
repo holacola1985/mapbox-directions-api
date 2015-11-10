@@ -1,3 +1,6 @@
+## 0.5.0 (Nov 10 2015)
+Reduced to simple API abstraction
+
 ## 0.4.0 (Oct 8 2015)
 
 #### Improvements
