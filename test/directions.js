@@ -3,7 +3,7 @@ var test = require('tape');
 
 test("Directions", function(t) {
     t.test("#setOrigin", function(u) {
-        u.plan(6);
+        u.plan(7);
 
         u.test("normalizes latLng", function(v) {
             var directions = L.mapbox.directionsAPI({accessToken: 'key'});
@@ -16,6 +16,13 @@ test("Directions", function(t) {
             var directions = L.mapbox.directionsAPI({accessToken: 'key'});
             directions.setOrigin(L.latLng(0, 190));
             v.deepEqual(directions.getOrigin().geometry.coordinates, [-170, 0]);
+            v.end();
+        });
+
+        u.test("normalizes lat lng array", function (v) {
+            var directions = L.mapbox.directionsAPI({accessToken: 'key'});
+            directions.setOrigin([1, 2]);
+            v.deepEqual(directions.getOrigin().geometry.coordinates, [2, 1]);
             v.end();
         });
 
